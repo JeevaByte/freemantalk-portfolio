@@ -1,16 +1,19 @@
-// components/Hero.js
+import Image from 'next/image';
+
 const Hero = () => {
-    return (
-      <section className="hero">
-        <img src="/your-photo.jpg" alt="Your photo" className="hero-img" />
-        <div className="hero-text">
-          <h1>Hi, I'm Jeeva Balakrishnan</h1>
-          <p>I am a Cloud Engineer and Developer with a passion for AWS, Terraform, and DevOps.</p>
-          <a href="#contact" className="cta-button">Hire Me</a>
-        </div>
-      </section>
-    );
-  };
-  
-  export default Hero;
-  
+  return (
+    <section className="hero">
+      {/* Replace <img> with Next.js <Image /> */}
+      <Image src="/profile-pic.jpg" alt="Jeeva Balakrishnan" width={200} height={200} />
+
+      {/* Fix Unescaped Apostrophe */}
+      <h1>Hi, I&apos;m Jeeva Balakrishnan</h1>
+
+      <p>
+        Cloud Engineer | DevOps Enthusiast | AWS Certified
+      </p>
+    </section>
+  );
+};
+
+export default Hero;
