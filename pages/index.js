@@ -1,16 +1,15 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-export default function Home() {
-    return (
-        <div>
-            <h1>Welcome to My Portfolio</h1>
-            <nav>
-                <ul>
-                    <li><Link href="/about">About</Link></li>
-                    <li><Link href="/projects">Projects</Link></li>
-                    <li><Link href="/contact">Contact</Link></li>
-                </ul>
-            </nav>
-        </div>
-    );
+export default function Blog() {
+  return (
+    <div>
+      <h1>Blog</h1>
+      <p>Welcome to my blog! Here are my latest posts:</p>
+      <ul>
+        <li>
+          <Link href="/blog/sample-post">Sample Blog Post</Link>
+        </li>
+      </ul>
+    </div>
+  );
 }
