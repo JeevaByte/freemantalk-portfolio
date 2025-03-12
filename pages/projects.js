@@ -1,4 +1,3 @@
-// pages/projects.js
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -26,36 +25,24 @@ const Projects = ({ projects }) => {
 };
 
 export async function getStaticProps() {
-  // Fetch project data from an API endpoint
-  const res = await fetch('https://api.example.com/projects');
-
-  // Handle errors if the fetch fails
-  if (!res.ok) {
-    return {
-      props: {
-        projects: [
-          {
-            title: "Cloud Automation with Terraform",
-            description: "A project to automate cloud infrastructure provisioning using Terraform.",
-            techStack: ["AWS", "Terraform", "Bash"],
-            liveDemo: "https://example.com/demo",
-            githubLink: "https://github.com/your-username/project1"
-          },
-          {
-            title: "CI/CD Pipeline with Jenkins",
-            description: "Setup of a CI/CD pipeline for a full-stack application.",
-            techStack: ["Jenkins", "Docker", "AWS"],
-            liveDemo: "https://example.com/demo",
-            githubLink: "https://github.com/your-username/project2"
-          },
-        ],
-      },
-    };
-  }
-
-  const projects = await res.json();
-
-  console.log('Fetched Projects:', projects); // Log the fetched data for debugging
+  // Commented out for testing
+  // const res = await fetch('https://api.example.com/projects'); 
+  const projects = [
+    {
+      title: "Cloud Automation with Terraform",
+      description: "A project to automate cloud infrastructure provisioning using Terraform.",
+      techStack: ["AWS", "Terraform", "Bash"],
+      liveDemo: "https://example.com/demo",
+      githubLink: "https://github.com/your-username/project1"
+    },
+    {
+      title: "CI/CD Pipeline with Jenkins",
+      description: "Setup of a CI/CD pipeline for a full-stack application.",
+      techStack: ["Jenkins", "Docker", "AWS"],
+      liveDemo: "https://example.com/demo",
+      githubLink: "https://github.com/your-username/project2"
+    },
+  ];
 
   return {
     props: {
