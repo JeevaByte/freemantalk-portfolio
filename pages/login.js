@@ -15,7 +15,7 @@ export default function Login() {
         </div>
         <button type="submit" className="bg-blue-500 text-white rounded p-2">Login</button>
       </form>
-      <p className="mt-4">Don't have an account? <Link href="/register" className="text-blue-500">Register here</Link></p>
+      <p className="mt-4">Don&apos;t have an account? <Link href="/register" className="text-blue-500">Register here</Link></p>
       <div className="mt-4 p-5 bg-gray-200">
         {/* Placeholder for logo */}
         Logo
