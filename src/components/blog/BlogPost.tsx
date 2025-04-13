@@ -2,6 +2,7 @@
 import { Calendar, User, Clock, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export interface BlogPostProps {
   id: string;
@@ -11,8 +12,9 @@ export interface BlogPostProps {
   author: string;
   readTime: string;
   tags: string[];
-  imageUrl?: string;
+  coverImage?: string;
   slug: string;
+  notionPageId?: string;
 }
 
 const BlogPost = ({
@@ -22,15 +24,15 @@ const BlogPost = ({
   author,
   readTime,
   tags,
-  imageUrl,
+  coverImage,
   slug,
 }: BlogPostProps) => {
   return (
     <article className="bg-card border rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col h-full">
-      {imageUrl && (
+      {coverImage && (
         <div className="relative h-48 overflow-hidden">
           <img
-            src={imageUrl}
+            src={coverImage}
             alt={title}
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
@@ -64,10 +66,10 @@ const BlogPost = ({
         </div>
         
         <Button variant="outline" className="flex items-center justify-center gap-1 self-start" asChild>
-          <a href={`/blog/${slug}`}>
+          <Link to={`/blog/${slug}`}>
             Read Article
             <ArrowRight size={16} />
-          </a>
+          </Link>
         </Button>
       </div>
     </article>

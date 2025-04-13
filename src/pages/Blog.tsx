@@ -1,9 +1,10 @@
 
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogPost from "@/components/blog/BlogPost";
-import { blogPosts, getAllBlogTags } from "@/data/blog";
+import { getDummyNotionPosts, getPublishedBlogPosts, NotionPost } from "@/services/NotionService";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, BookOpen } from "lucide-react";
@@ -15,6 +16,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { toast } from "@/hooks/use-toast";
 
 const POSTS_PER_PAGE = 6;
 
@@ -23,14 +25,55 @@ const Blog = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [filteredPosts, setFilteredPosts] = useState(blogPosts);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   
+  // Fetch blog posts from Notion
+  const { data: blogPosts, isLoading, error } = useQuery({
+    queryKey: ['notionBlogPosts'],
+    queryFn: async () => {
+      // In production, uncomment this line to fetch from Notion
+      // return await getPublishedBlogPosts();
+      
+      // For now, use dummy data
+      return getDummyNotionPosts();
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+  
+  // Handle possible errors
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error loading blog posts",
+        description: "Could not load blog posts from Notion. Using local data instead.",
+        variant: "destructive",
+      });
+      console.error("Error loading blog posts:", error);
+    }
+  }, [error]);
+
+  // Extract all unique tags from blog posts
+  const getAllBlogTags = (): string[] => {
+    if (!blogPosts) return [];
+    
+    const tagsSet = new Set<string>();
+    blogPosts.forEach(post => {
+      post.tags.forEach(tag => {
+        tagsSet.add(tag);
+      });
+    });
+    
+    return Array.from(tagsSet).sort();
+  };
+  
   const allTags = getAllBlogTags();
 
-  useEffect(() => {
+  // Filter posts based on search term and selected tag
+  const getFilteredPosts = (): NotionPost[] => {
+    if (!blogPosts) return [];
+    
     let filtered = blogPosts;
     
     // Filter by search term
@@ -50,12 +93,14 @@ const Blog = () => {
       );
     }
     
-    setFilteredPosts(filtered);
-    setCurrentPage(1); // Reset to first page when filters change
-  }, [searchTerm, selectedTag]);
+    return filtered;
+  };
+  
+  const filteredPosts = getFilteredPosts();
 
   const handleTagClick = (tag: string) => {
     setSelectedTag(selectedTag === tag ? null : tag);
+    setCurrentPage(1); // Reset to first page when filters change
   };
 
   // Calculate pagination
@@ -99,7 +144,10 @@ const Blog = () => {
                 type="text"
                 placeholder="Search articles..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1); // Reset to first page when search changes
+                }}
                 className="pl-10"
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -130,7 +178,20 @@ const Blog = () => {
             </div>
           </div>
           
-          {filteredPosts.length > 0 ? (
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="bg-card border rounded-xl overflow-hidden h-96 animate-pulse">
+                  <div className="bg-muted h-48 w-full"></div>
+                  <div className="p-6">
+                    <div className="h-6 bg-muted rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-muted rounded w-full mb-2"></div>
+                    <div className="h-4 bg-muted rounded w-5/6"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : filteredPosts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {currentPosts.map((post) => (
