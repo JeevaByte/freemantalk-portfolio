@@ -1,9 +1,8 @@
-
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProfessionalJourney from "@/components/about/ProfessionalJourney";
-import { Download, GitHub, Linkedin, Twitter } from "lucide-react";
+import { Download, Github, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const About = () => {
@@ -40,7 +39,7 @@ const About = () => {
                   <div className="flex flex-wrap gap-2 mb-4">
                     <Button variant="outline" size="icon" asChild>
                       <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                        <GitHub size={18} />
+                        <Github size={18} />
                       </a>
                     </Button>
                     <Button variant="outline" size="icon" asChild>

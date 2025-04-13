@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -87,7 +86,7 @@ const Blog = () => {
               
               {selectedTag && (
                 <Badge 
-                  variant="ghost"
+                  variant="outline"
                   className="cursor-pointer"
                   onClick={() => setSelectedTag(null)}
                 >
