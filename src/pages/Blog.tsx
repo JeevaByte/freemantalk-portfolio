@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -5,7 +6,17 @@ import BlogPost from "@/components/blog/BlogPost";
 import { blogPosts, getAllBlogTags } from "@/data/blog";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, BookOpen } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+const POSTS_PER_PAGE = 6;
 
 const Blog = () => {
   useEffect(() => {
@@ -15,6 +26,7 @@ const Blog = () => {
   const [filteredPosts, setFilteredPosts] = useState(blogPosts);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   
   const allTags = getAllBlogTags();
 
@@ -39,10 +51,29 @@ const Blog = () => {
     }
     
     setFilteredPosts(filtered);
+    setCurrentPage(1); // Reset to first page when filters change
   }, [searchTerm, selectedTag]);
 
   const handleTagClick = (tag: string) => {
     setSelectedTag(selectedTag === tag ? null : tag);
+  };
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const indexOfLastPost = currentPage * POSTS_PER_PAGE;
+  const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Generate page numbers for pagination
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  // Handle page change
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -51,8 +82,11 @@ const Blog = () => {
       <main className="pt-20">
         <section className="section-container">
           <div className="mb-10">
-            <h1 className="text-4xl font-bold mb-4">Blog</h1>
-            <p className="text-lg text-muted-foreground max-w-3xl">
+            <div className="flex items-center gap-3">
+              <BookOpen className="text-cloud-blue h-8 w-8" />
+              <h1 className="text-4xl font-bold">Blog</h1>
+            </div>
+            <p className="text-lg text-muted-foreground max-w-3xl mt-4">
               Articles and tutorials on cloud engineering, DevOps, and infrastructure best practices.
               Learn from my experiences and stay updated with the latest in cloud technologies.
             </p>
@@ -97,11 +131,50 @@ const Blog = () => {
           </div>
           
           {filteredPosts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredPosts.map((post) => (
-                <BlogPost key={post.id} {...post} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {currentPosts.map((post) => (
+                  <BlogPost key={post.id} {...post} />
+                ))}
+              </div>
+              
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <Pagination className="mt-8">
+                  <PaginationContent>
+                    {currentPage > 1 && (
+                      <PaginationItem>
+                        <PaginationPrevious 
+                          onClick={() => handlePageChange(currentPage - 1)} 
+                          className="cursor-pointer"
+                        />
+                      </PaginationItem>
+                    )}
+                    
+                    {pageNumbers.map(number => (
+                      <PaginationItem key={number}>
+                        <PaginationLink
+                          isActive={currentPage === number}
+                          onClick={() => handlePageChange(number)}
+                          className="cursor-pointer"
+                        >
+                          {number}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    
+                    {currentPage < totalPages && (
+                      <PaginationItem>
+                        <PaginationNext 
+                          onClick={() => handlePageChange(currentPage + 1)} 
+                          className="cursor-pointer"
+                        />
+                      </PaginationItem>
+                    )}
+                  </PaginationContent>
+                </Pagination>
+              )}
+            </>
           ) : (
             <div className="text-center py-16">
               <h3 className="text-xl font-medium mb-2">No articles found matching your search</h3>
