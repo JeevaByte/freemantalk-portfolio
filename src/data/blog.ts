@@ -10,7 +10,7 @@ export const blogPosts: BlogPostProps[] = [
     author: "Cloud Engineer",
     readTime: "8 min read",
     tags: ["AWS", "High Availability", "Architecture", "Disaster Recovery"],
-    imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
+    coverImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
     slug: "building-resilient-multi-region-aws-architectures"
   },
   {
@@ -21,7 +21,7 @@ export const blogPosts: BlogPostProps[] = [
     author: "Cloud Engineer",
     readTime: "10 min read",
     tags: ["Kubernetes", "Cost Optimization", "DevOps", "Cloud"],
-    imageUrl: "https://images.unsplash.com/photo-1667372393119-3d9453c6f5b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
+    coverImage: "https://images.unsplash.com/photo-1667372393119-3d9453c6f5b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
     slug: "kubernetes-cost-optimization-strategies"
   },
   {
@@ -32,7 +32,7 @@ export const blogPosts: BlogPostProps[] = [
     author: "Cloud Engineer",
     readTime: "12 min read",
     tags: ["GitOps", "ArgoCD", "Kubernetes", "CI/CD", "DevOps"],
-    imageUrl: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
+    coverImage: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
     slug: "implementing-gitops-with-argocd-and-kubernetes"
   },
   {
@@ -43,7 +43,7 @@ export const blogPosts: BlogPostProps[] = [
     author: "Cloud Engineer",
     readTime: "15 min read",
     tags: ["Terraform", "IaC", "Enterprise", "DevOps", "Best Practices"],
-    imageUrl: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
+    coverImage: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
     slug: "terraform-best-practices-for-enterprise-environments"
   }
 ];
