@@ -2,17 +2,17 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { NotionRenderer } from "react-notion-x";
 import { Calendar, User, Clock, ArrowLeft, Tag } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { getPageContent, getDummyNotionPosts, NotionPost } from "@/services/NotionService";
+import { getPageContent, getDummyNotionPosts } from "@/services/NotionService";
 import { toast } from "@/hooks/use-toast";
+import { blogPosts } from "@/data/blog";
 
-// Import these necessary styles for the Notion renderer
+// Import just the CSS without the component to avoid render issues
 import 'react-notion-x/src/styles.css';
 import 'prismjs/themes/prism-tomorrow.css';
 
@@ -24,44 +24,26 @@ const BlogPost = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Find the post data from dummy data (in production, fetch from Notion)
-  const { data: allPosts } = useQuery({
-    queryKey: ['notionBlogPosts'],
-    queryFn: async () => {
-      // In production, uncomment this line
-      // return await getPublishedBlogPosts();
-      
-      // For now, use dummy data
-      return getDummyNotionPosts();
-    },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  });
+  // Find the post data from our local blog posts
+  const post = blogPosts.find(post => post.slug === slug);
 
-  const post = allPosts?.find(post => post.slug === slug);
-
-  // Fetch the Notion page content
-  const { data: notionContent, isLoading: contentLoading, error } = useQuery({
-    queryKey: ['notionPage', post?.notionPageId],
+  // We're disabling fetching of Notion content for now to avoid browser compatibility issues
+  // Instead of the NotionRenderer, we'll show the excerpt and a message
+  const { isLoading: contentLoading } = useQuery({
+    queryKey: ['notionPage', post?.id],
     queryFn: () => {
-      if (!post?.notionPageId) {
+      if (!post?.id) {
         throw new Error('No page ID found');
       }
-      return getPageContent(post.notionPageId);
+      // This is commented out for now because we're having issues with Notion libraries
+      // in the browser environment. In a production app, you would have a backend service
+      // to handle this.
+      // return getPageContent(post.id);
+      return Promise.resolve({});
     },
-    enabled: !!post?.notionPageId,
+    enabled: false, // Disable auto-fetching
     staleTime: 10 * 60 * 1000, // 10 minutes
   });
-
-  useEffect(() => {
-    if (error) {
-      toast({
-        title: "Error loading blog post",
-        description: "Could not load the blog post content. Please try again later.",
-        variant: "destructive",
-      });
-      console.error("Error loading blog post:", error);
-    }
-  }, [error]);
 
   if (!slug) {
     navigate('/blog');
@@ -154,24 +136,23 @@ const BlogPost = () => {
                   <div key={i} className="h-6 bg-muted rounded animate-pulse" style={{width: `${Math.random() * 40 + 60}%`}}></div>
                 ))}
               </div>
-            ) : notionContent ? (
-              <NotionRenderer recordMap={notionContent} fullPage={false} darkMode={false} />
             ) : (
               // Fallback content for preview/development
               <div className="prose max-w-none">
                 <p className="text-lg mb-4">{post.excerpt}</p>
                 <p className="mb-4">
-                  This is a placeholder for the actual Notion content. In production, this will be replaced
-                  with the content fetched from Notion using your API keys.
+                  This is a placeholder for the actual Notion content. In a production environment, 
+                  the full article content would be displayed here.
                 </p>
                 <p>
-                  To set up Notion integration, you'll need to:
+                  To set up full Notion integration, you'll need to:
                 </p>
                 <ol className="list-decimal list-inside space-y-2 mt-4">
+                  <li>Create a backend API service to fetch Notion content (to avoid CORS and browser compatibility issues)</li>
                   <li>Create a Notion integration at <a href="https://www.notion.so/my-integrations" className="text-blue-500 underline">Notion Integrations</a></li>
                   <li>Share your Notion database with your integration</li>
-                  <li>Set up environment variables for NOTION_API_KEY and NOTION_BLOG_DATABASE_ID</li>
-                  <li>Uncomment the API fetch code in the NotionService.ts file</li>
+                  <li>Set up environment variables for your API keys</li>
+                  <li>Connect your backend API to the Notion API</li>
                 </ol>
               </div>
             )}
