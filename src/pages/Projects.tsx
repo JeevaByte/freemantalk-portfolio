@@ -4,7 +4,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProjectCard from "@/components/projects/ProjectCard";
 import ProjectFilter from "@/components/projects/ProjectFilter";
+import ProjectSort from "@/components/projects/ProjectSort";
+import FeaturedProjects from "@/components/projects/FeaturedProjects";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { projects, getAllTags, Project } from "@/data/projects";
+
+const ITEMS_PER_PAGE = 6;
 
 const Projects = () => {
   useEffect(() => {
@@ -12,19 +17,19 @@ const Projects = () => {
   }, []);
 
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortOption, setSortOption] = useState("featured");
   const allTags = getAllTags();
 
   const handleFilterChange = (selectedTags: string[], searchTerm: string) => {
     let filtered = projects;
     
-    // Filter by tags if any are selected
     if (selectedTags.length > 0) {
       filtered = filtered.filter(project => 
         selectedTags.some(tag => project.tags.includes(tag))
       );
     }
     
-    // Filter by search term if provided
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(project => 
@@ -34,7 +39,42 @@ const Projects = () => {
       );
     }
     
-    setFilteredProjects(filtered);
+    setFilteredProjects(sortProjects(filtered, sortOption));
+    setCurrentPage(1);
+  };
+
+  const sortProjects = (projectsToSort: Project[], sort: string): Project[] => {
+    const sorted = [...projectsToSort];
+    switch (sort) {
+      case "az":
+        return sorted.sort((a, b) => a.title.localeCompare(b.title));
+      case "za":
+        return sorted.sort((a, b) => b.title.localeCompare(a.title));
+      case "mostTags":
+        return sorted.sort((a, b) => b.tags.length - a.tags.length);
+      case "featured":
+      default:
+        return sorted.sort((a, b) => {
+          if (a.featured === b.featured) return 0;
+          return a.featured ? -1 : 1;
+        });
+    }
+  };
+
+  const handleSortChange = (value: string) => {
+    setSortOption(value);
+    setFilteredProjects(sortProjects(filteredProjects, value));
+    setCurrentPage(1);
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedProjects = filteredProjects.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -49,15 +89,53 @@ const Projects = () => {
               experience with various technologies and infrastructure solutions.
             </p>
           </div>
+
+          <FeaturedProjects projects={projects} />
           
-          <ProjectFilter tags={allTags} onFilterChange={handleFilterChange} />
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <ProjectFilter tags={allTags} onFilterChange={handleFilterChange} />
+            <ProjectSort onSortChange={handleSortChange} currentSort={sortOption} />
+          </div>
           
-          {filteredProjects.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
+          {paginatedProjects.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+                {paginatedProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <Pagination className="my-8">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious 
+                        onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                        className={currentPage <= 1 ? 'pointer-events-none opacity-50' : ''}
+                      />
+                    </PaginationItem>
+                    
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          onClick={() => handlePageChange(page)}
+                          isActive={currentPage === page}
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    
+                    <PaginationItem>
+                      <PaginationNext 
+                        onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+                        className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              )}
+            </>
           ) : (
             <div className="text-center py-16">
               <h3 className="text-xl font-medium mb-2">No projects found matching your filters</h3>
