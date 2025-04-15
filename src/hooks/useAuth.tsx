@@ -17,7 +17,7 @@ export const useAuth = () => {
         
         if (session?.user) {
           const { data } = await supabase.rpc('is_admin', {
-            user_id: session.user.id
+            user_id: session.user.id as string
           });
           setIsAdmin(!!data);
         } else {
@@ -33,7 +33,7 @@ export const useAuth = () => {
       
       if (session?.user) {
         supabase.rpc('is_admin', {
-          user_id: session.user.id
+          user_id: session.user.id as string
         }).then(({ data }) => {
           setIsAdmin(!!data);
         });
