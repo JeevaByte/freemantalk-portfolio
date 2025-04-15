@@ -1,4 +1,3 @@
-
 import { BlogPostProps } from "@/components/blog/BlogPost";
 
 export const blogPosts: BlogPostProps[] = [

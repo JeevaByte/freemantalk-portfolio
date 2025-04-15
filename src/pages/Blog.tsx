@@ -3,40 +3,33 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogPost from "@/components/blog/BlogPost";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Search, BookOpen } from "lucide-react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { blogPosts } from "@/data/blog";
-import { getAllBlogTags } from "@/data/blog";
+import { blogPosts, getAllBlogTags } from "@/data/blog";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import BlogFilter from "@/components/blog/BlogFilter";
+import BlogSort from "@/components/blog/BlogSort";
+import FeaturedBlogPosts from "@/components/blog/FeaturedBlogPosts";
 
-const POSTS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 4;
 
 const Blog = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [filteredPosts, setFilteredPosts] = useState(blogPosts);
   const [currentPage, setCurrentPage] = useState(1);
-  
-  // Use our local blog posts data
-  const allPosts = blogPosts;
+  const [sortOption, setSortOption] = useState("newest");
   const allTags = getAllBlogTags();
-  
-  // Filter posts based on search term and selected tag
-  const getFilteredPosts = () => {
-    let filtered = allPosts;
+
+  const handleFilterChange = (selectedTags: string[], searchTerm: string) => {
+    let filtered = blogPosts;
     
-    // Filter by search term
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter(post => 
+        selectedTags.some(tag => post.tags.includes(tag))
+      );
+    }
+    
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(post => 
@@ -46,39 +39,47 @@ const Blog = () => {
       );
     }
     
-    // Filter by tag
-    if (selectedTag) {
-      filtered = filtered.filter(post => 
-        post.tags.includes(selectedTag)
-      );
-    }
+    setFilteredPosts(sortPosts(filtered, sortOption));
+    setCurrentPage(1);
+  };
+
+  const sortPosts = (postsToSort: typeof blogPosts, sort: string) => {
+    const sorted = [...postsToSort];
     
-    return filtered;
+    switch (sort) {
+      case "newest":
+        return sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      case "oldest":
+        return sorted.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      case "az":
+        return sorted.sort((a, b) => a.title.localeCompare(b.title));
+      case "za":
+        return sorted.sort((a, b) => b.title.localeCompare(a.title));
+      case "readTime":
+        return sorted.sort((a, b) => {
+          const aTime = parseInt(a.readTime.split(" ")[0]);
+          const bTime = parseInt(b.readTime.split(" ")[0]);
+          return bTime - aTime;
+        });
+      default:
+        return sorted;
+    }
   };
-  
-  const filteredPosts = getFilteredPosts();
 
-  const handleTagClick = (tag: string) => {
-    setSelectedTag(selectedTag === tag ? null : tag);
-    setCurrentPage(1); // Reset to first page when filters change
+  const handleSortChange = (value: string) => {
+    setSortOption(value);
+    setFilteredPosts(sortPosts(filteredPosts, value));
+    setCurrentPage(1);
   };
 
-  // Calculate pagination
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-  const indexOfLastPost = currentPage * POSTS_PER_PAGE;
-  const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  // Pagination logic
+  const totalPages = Math.ceil(filteredPosts.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedPosts = filteredPosts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
-  // Generate page numbers for pagination
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-
-  // Handle page change
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo(0, 0);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -87,106 +88,64 @@ const Blog = () => {
       <main className="pt-20">
         <section className="section-container">
           <div className="mb-10">
-            <div className="flex items-center gap-3">
-              <BookOpen className="text-cloud-blue h-8 w-8" />
-              <h1 className="text-4xl font-bold">Blog</h1>
-            </div>
-            <p className="text-lg text-muted-foreground max-w-3xl mt-4">
-              Articles and tutorials on cloud engineering, DevOps, and infrastructure best practices.
-              Learn from my experiences and stay updated with the latest in cloud technologies.
+            <h1 className="text-4xl font-bold mb-4">Blog</h1>
+            <p className="text-lg text-muted-foreground max-w-3xl">
+              Insights, tutorials, and thoughts on cloud engineering, DevOps, 
+              and infrastructure as code.
             </p>
           </div>
+
+          <FeaturedBlogPosts posts={blogPosts} />
           
-          <div className="mb-10 space-y-6">
-            {/* Search bar */}
-            <div className="relative max-w-md">
-              <Input
-                type="text"
-                placeholder="Search articles..."
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setCurrentPage(1); // Reset to first page when search changes
-                }}
-                className="pl-10"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            </div>
-            
-            {/* Tags filter */}
-            <div className="flex flex-wrap gap-2">
-              {allTags.map((tag) => (
-                <Badge 
-                  key={tag}
-                  variant={selectedTag === tag ? "default" : "outline"}
-                  className={`cursor-pointer ${selectedTag === tag ? "bg-cloud-blue hover:bg-cloud-darkBlue" : ""}`}
-                  onClick={() => handleTagClick(tag)}
-                >
-                  {tag}
-                </Badge>
-              ))}
-              
-              {selectedTag && (
-                <Badge 
-                  variant="outline"
-                  className="cursor-pointer"
-                  onClick={() => setSelectedTag(null)}
-                >
-                  Clear filter
-                </Badge>
-              )}
-            </div>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <BlogFilter tags={allTags} onFilterChange={handleFilterChange} />
+            <BlogSort onSortChange={handleSortChange} currentSort={sortOption} />
           </div>
-          
-          {filteredPosts.length > 0 ? (
+
+          {paginatedPosts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {currentPosts.map((post) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                {paginatedPosts.map((post) => (
                   <BlogPost key={post.id} {...post} />
                 ))}
               </div>
-              
-              {/* Pagination */}
+
               {totalPages > 1 && (
-                <Pagination className="mt-8">
+                <Pagination className="my-12">
                   <PaginationContent>
-                    {currentPage > 1 && (
-                      <PaginationItem>
-                        <PaginationPrevious 
-                          onClick={() => handlePageChange(currentPage - 1)} 
-                          className="cursor-pointer"
-                        />
-                      </PaginationItem>
-                    )}
+                    <PaginationItem>
+                      <PaginationPrevious 
+                        onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                        className={currentPage <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                      />
+                    </PaginationItem>
                     
-                    {pageNumbers.map(number => (
-                      <PaginationItem key={number}>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <PaginationItem key={page}>
                         <PaginationLink
-                          isActive={currentPage === number}
-                          onClick={() => handlePageChange(number)}
+                          onClick={() => handlePageChange(page)}
+                          isActive={currentPage === page}
                           className="cursor-pointer"
                         >
-                          {number}
+                          {page}
                         </PaginationLink>
                       </PaginationItem>
                     ))}
                     
-                    {currentPage < totalPages && (
-                      <PaginationItem>
-                        <PaginationNext 
-                          onClick={() => handlePageChange(currentPage + 1)} 
-                          className="cursor-pointer"
-                        />
-                      </PaginationItem>
-                    )}
+                    <PaginationItem>
+                      <PaginationNext 
+                        onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+                        className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                      />
+                    </PaginationItem>
                   </PaginationContent>
                 </Pagination>
               )}
             </>
           ) : (
             <div className="text-center py-16">
-              <h3 className="text-xl font-medium mb-2">No articles found matching your search</h3>
-              <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
+              <h3 className="text-xl font-medium mb-2">No blog posts found matching your filters</h3>
+              <p className="text-muted-foreground">Try adjusting your search criteria or clear filters</p>
             </div>
           )}
         </section>
