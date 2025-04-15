@@ -1,15 +1,18 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/contact/ContactForm";
 import { Calendar, Github, Linkedin, Mail, MapPin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SocialMediaIntegration from "@/components/social/SocialMediaIntegration";
 
 const Contact = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [showSocialIntegration, setShowSocialIntegration] = useState(false);
 
   return (
     <div className="min-h-screen">
@@ -27,6 +30,22 @@ const Contact = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
               <ContactForm />
+              
+              <div className="mt-10 mb-6 border-t pt-6">
+                <h2 className="text-2xl font-semibold mb-4">Social Media Integration</h2>
+                <p className="text-muted-foreground mb-4">
+                  Connect your Medium and LinkedIn accounts to automatically cross-post your blog content.
+                </p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowSocialIntegration(!showSocialIntegration)}
+                  className="mb-4"
+                >
+                  {showSocialIntegration ? "Hide Integration Options" : "Show Integration Options"}
+                </Button>
+                
+                {showSocialIntegration && <SocialMediaIntegration />}
+              </div>
             </div>
             
             <div className="space-y-6">
