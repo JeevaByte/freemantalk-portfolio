@@ -59,7 +59,7 @@ const Contact = () => {
                     <MapPin className="w-5 h-5 text-cloud-blue mt-1" />
                     <div>
                       <h4 className="font-medium">Location</h4>
-                      <p className="text-muted-foreground">San Francisco, CA</p>
+                      <p className="text-muted-foreground">London,United Kingdom</p>
                     </div>
                   </div>
                   
@@ -67,7 +67,7 @@ const Contact = () => {
                     <Mail className="w-5 h-5 text-cloud-blue mt-1" />
                     <div>
                       <h4 className="font-medium">Email</h4>
-                      <p className="text-muted-foreground">hello@cloudportfolio.com</p>
+                      <p className="text-muted-foreground">freemantalk.co.uk</p>
                     </div>
                   </div>
                   
@@ -89,12 +89,12 @@ const Contact = () => {
                 <h3 className="text-xl font-semibold mb-4">Follow Me</h3>
                 <div className="flex flex-wrap gap-3">
                   <Button variant="outline" size="icon" asChild>
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <a href="https://github.com/JeevaByte" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                       <Github size={18} />
                     </a>
                   </Button>
                   <Button variant="outline" size="icon" asChild>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/in/jeevanantham-balakrishnan-567482109/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                       <Linkedin size={18} />
                     </a>
                   </Button>
@@ -104,14 +104,6 @@ const Contact = () => {
                     </a>
                   </Button>
                 </div>
-              </div>
-              
-              <div className="bg-card rounded-lg border p-6">
-                <h3 className="text-xl font-semibold mb-4">Resume</h3>
-                <p className="text-muted-foreground mb-4">
-                  Download my detailed resume to learn more about my skills and experience.
-                </p>
-                <Button className="w-full bg-cloud-blue hover:bg-cloud-darkBlue">Download CV</Button>
               </div>
             </div>
           </div>

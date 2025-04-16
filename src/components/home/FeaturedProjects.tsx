@@ -1,4 +1,3 @@
-
 import { ArrowUpRight } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,10 +7,10 @@ import { Link } from "react-router-dom";
 const FeaturedProjects = () => {
   const projects = [
     {
-      title: "Multi-Region AWS Infrastructure",
-      description: "Built a highly available infrastructure spanning multiple AWS regions using Terraform with automatic failover capabilities.",
-      tags: ["AWS", "Terraform", "HA", "Multi-Region"],
-      githubUrl: "https://github.com",
+      title: "Multi-Cloud Architecture with Terraform",
+      description: "A comprehensive Terraform project implementing a multi-cloud architecture across AWS, Azure, and Google Cloud Platform. Features include infrastructure as code, modular design, and cross-cloud networking.",
+      tags: ["Terraform", "AWS", "Azure", "GCP", "Multi-Cloud", "IaC"],
+      githubUrl: "https://github.com/JeevaByte/Multi-Cloud-Architecture-with-Terraform",
       demoUrl: "#"
     },
     {
