@@ -1,14 +1,13 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import UserMenu from "./auth/UserMenu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Track scroll position for styling changes
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -42,7 +41,6 @@ const Navbar = () => {
             </Link>
           </div>
           
-          {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-4">
             {navLinks.map((link) => (
               <Link
@@ -54,11 +52,12 @@ const Navbar = () => {
               </Link>
             ))}
             <ThemeToggle />
+            <UserMenu />
           </div>
           
-          {/* Mobile Navigation */}
           <div className="flex md:hidden items-center">
             <ThemeToggle />
+            <UserMenu />
             <button
               type="button"
               className="inline-flex items-center justify-center p-2 ml-3 rounded-md text-foreground hover:text-cloud-blue focus:outline-none"
@@ -72,7 +71,6 @@ const Navbar = () => {
         </div>
       </div>
       
-      {/* Mobile Menu */}
       <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background shadow-lg">
           {navLinks.map((link) => (
