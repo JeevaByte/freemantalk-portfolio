@@ -21,9 +21,9 @@ export const useAuth = () => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          const { data } = await supabase.rpc<boolean>('is_admin', {
+          const { data } = await supabase.rpc<boolean, IsAdminParams>('is_admin', {
             user_id: session.user.id
-          } as IsAdminParams);
+          });
           setIsAdmin(!!data);
         } else {
           setIsAdmin(false);
@@ -37,9 +37,9 @@ export const useAuth = () => {
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        supabase.rpc<boolean>('is_admin', {
+        supabase.rpc<boolean, IsAdminParams>('is_admin', {
           user_id: session.user.id
-        } as IsAdminParams).then(({ data }) => {
+        }).then(({ data }) => {
           setIsAdmin(!!data);
         });
       }
