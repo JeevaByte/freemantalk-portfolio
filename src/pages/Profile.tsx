@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Github, Linkedin, Mail } from "lucide-react";
+import BlogPlatformIcons from "@/components/blog/BlogPlatformIcons";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -121,8 +123,38 @@ const Profile = () => {
                     <label className="text-sm font-medium text-muted-foreground">Bio</label>
                     <p className="mt-1">{formData.bio || "Not set"}</p>
                   </div>
+                  <div className="mt-6">
+                    <h3 className="text-lg font-semibold mb-4">Blog Platforms</h3>
+                    <BlogPlatformIcons />
+                  </div>
                 </div>
               )}
+              <div className="flex space-x-4">
+                <a
+                  href="https://github.com/JeevaByte"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Github className="h-6 w-6" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/jeevanantham-balakrishnan-567482109/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Linkedin className="h-6 w-6" />
+                </a>
+                <a
+                  href="https://medium.com/@jeevanantham-balakrishnan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Mail className="h-6 w-6" />
+                </a>
+              </div>
             </CardContent>
           </Card>
         </div>

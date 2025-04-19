@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +7,7 @@ import ProjectSort from "@/components/projects/ProjectSort";
 import FeaturedProjects from "@/components/projects/FeaturedProjects";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { projects, getAllTags, Project } from "@/data/projects";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -142,6 +142,33 @@ const Projects = () => {
               <p className="text-muted-foreground">Try adjusting your search criteria or clear filters</p>
             </div>
           )}
+
+          <div className="flex space-x-4">
+            <a
+              href="https://github.com/JeevaByte"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Github className="h-6 w-6" />
+            </a>
+            <a
+              href="https://linkedin.com/in/jeevanantham-balakrishnan-567482109/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Linkedin className="h-6 w-6" />
+            </a>
+            <a
+              href="https://medium.com/@jeevanantham-balakrishnan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Mail className="h-6 w-6" />
+            </a>
+          </div>
         </section>
       </main>
       <Footer />

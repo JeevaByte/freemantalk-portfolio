@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +7,8 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import BlogFilter from "@/components/blog/BlogFilter";
 import BlogSort from "@/components/blog/BlogSort";
 import FeaturedBlogPosts from "@/components/blog/FeaturedBlogPosts";
+import BlogPlatformIcons from "@/components/blog/BlogPlatformIcons";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const ITEMS_PER_PAGE = 4;
 
@@ -89,10 +90,11 @@ const Blog = () => {
         <section className="section-container">
           <div className="mb-10">
             <h1 className="text-4xl font-bold mb-4">Blog</h1>
-            <p className="text-lg text-muted-foreground max-w-3xl">
+            <p className="text-lg text-muted-foreground max-w-3xl mb-4">
               Insights, tutorials, and thoughts on cloud engineering, DevOps, 
               and infrastructure as code.
             </p>
+            <BlogPlatformIcons className="mb-8" />
           </div>
 
           <FeaturedBlogPosts posts={blogPosts} />
@@ -148,6 +150,33 @@ const Blog = () => {
               <p className="text-muted-foreground">Try adjusting your search criteria or clear filters</p>
             </div>
           )}
+
+          <div className="flex space-x-4">
+            <a
+              href="https://github.com/JeevaByte"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Github className="h-6 w-6" />
+            </a>
+            <a
+              href="https://linkedin.com/in/jeevanantham-balakrishnan-567482109/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Linkedin className="h-6 w-6" />
+            </a>
+            <a
+              href="https://medium.com/@jeevanantham-balakrishnan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Mail className="h-6 w-6" />
+            </a>
+          </div>
         </section>
       </main>
       <Footer />

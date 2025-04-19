@@ -6,6 +6,7 @@ import { Calendar, Github, Linkedin, Mail, MapPin, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import SocialMediaIntegration from "@/components/social/SocialMediaIntegration";
 import { useAuth } from "@/hooks/useAuth";
+import BlogPlatformIcons from "@/components/blog/BlogPlatformIcons";
 
 const Contact = () => {
   useEffect(() => {
@@ -22,10 +23,11 @@ const Contact = () => {
         <section className="section-container">
           <div className="mb-10">
             <h1 className="text-4xl font-bold mb-4">Contact</h1>
-            <p className="text-lg text-muted-foreground max-w-3xl">
+            <p className="text-lg text-muted-foreground max-w-3xl mb-4">
               Have a project idea or need cloud engineering expertise? I'd love to hear from you.
               Fill out the form below or reach out through any of my social channels.
             </p>
+            <BlogPlatformIcons className="mb-8" />
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -87,22 +89,31 @@ const Contact = () => {
               
               <div className="bg-card rounded-lg border p-6">
                 <h3 className="text-xl font-semibold mb-4">Follow Me</h3>
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="outline" size="icon" asChild>
-                    <a href="https://github.com/JeevaByte" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                      <Github size={18} />
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="icon" asChild>
-                    <a href="https://www.linkedin.com/in/jeevanantham-balakrishnan-567482109/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                      <Linkedin size={18} />
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="icon" asChild>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                      <Twitter size={18} />
-                    </a>
-                  </Button>
+                <div className="flex space-x-4">
+                  <a
+                    href="https://github.com/JeevaByte"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Github className="h-6 w-6" />
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/jeevanantham-balakrishnan-567482109/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Linkedin className="h-6 w-6" />
+                  </a>
+                  <a
+                    href="https://medium.com/@jeevanantham-balakrishnan"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Mail className="h-6 w-6" />
+                  </a>
                 </div>
               </div>
             </div>
