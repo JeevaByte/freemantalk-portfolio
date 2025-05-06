@@ -11,21 +11,24 @@ const FeaturedProjects = () => {
       description: "A comprehensive Terraform project implementing a multi-cloud architecture across AWS, Azure, and Google Cloud Platform. Features include infrastructure as code, modular design, and cross-cloud networking.",
       tags: ["Terraform", "AWS", "Azure", "GCP", "Multi-Cloud", "IaC"],
       githubUrl: "https://github.com/JeevaByte/Multi-Cloud-Architecture-with-Terraform",
-      demoUrl: "#"
+      demoUrl: "#",
+      imageUrl: "/images/projects/multi-cloud-architecture.jpg"
     },
     {
       title: "Kubernetes Monitoring Solution",
       description: "Implemented a comprehensive monitoring stack for Kubernetes clusters with Prometheus, Grafana, and custom alerting.",
       tags: ["Kubernetes", "Prometheus", "Grafana", "Monitoring"],
       githubUrl: "https://github.com",
-      demoUrl: "#"
+      demoUrl: "#",
+      imageUrl: "/images/projects/kubernetes-monitoring.jpg"
     },
     {
       title: "Serverless ETL Pipeline",
       description: "Designed and deployed a serverless data processing pipeline using AWS Lambda, S3, and Glue for cost-effective data transformation.",
       tags: ["AWS", "Serverless", "ETL", "Lambda"],
       githubUrl: "https://github.com",
-      demoUrl: "#"
+      demoUrl: "#",
+      imageUrl: "/images/projects/serverless-etl-pipeline.jpg"
     }
   ];
 
@@ -53,6 +56,12 @@ const FeaturedProjects = () => {
                 <CardTitle className="text-xl">{project.title}</CardTitle>
               </CardHeader>
               <CardContent className="flex-grow">
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
+                  loading="lazy"
+                  className="w-full h-48 object-cover rounded-md mb-4"
+                />
                 <p className="text-muted-foreground mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {project.tags.map((tag, tagIndex) => (

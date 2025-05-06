@@ -8,11 +8,10 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
         <div className="text-center md:text-left space-y-6 animate-fade-in">
           <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight">
-            Cloud Engineer <span className="text-cloud-blue">& DevOps Specialist</span>
+            Cloud Architect <span className="text-cloud-blue">& Data Specialist</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl">
-            Hi, I'm Jeevanantham Balakrishnan, a Cloud Engineer with a passion for building scalable and efficient systems. 
-            Currently pursuing my MSc at the University of Leicester, I specialize in AWS, Terraform, and containerization technologies.
+            Welcome to my portfolio! I am Jeevanantham Balakrishnan, a highly experienced Cloud Architect and Data Engineer with over 6 years of hands-on expertise in designing, developing, and optimizing scalable, secure, and high-performance cloud solutions. My focus lies in empowering businesses to unlock the full potential of cloud technologies, driving both innovation and operational excellence. Through strategic cloud architecture and automation, I help organizations improve their agility, reduce costs, and accelerate growth in an increasingly digital world.
           </p>
           <div className="flex flex-wrap gap-4 justify-center md:justify-start">
             <Button className="btn-primary" asChild>
