@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
-import UserMenu from "./auth/UserMenu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,8 +35,8 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0 font-bold text-xl">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-cloud-blue">Cloud</span>
-              <span>Engineer</span>
+              <span className="text-cloud-blue">Freeman</span>
+              <span>Talk</span>
             </Link>
           </div>
           
@@ -52,12 +51,10 @@ const Navbar = () => {
               </Link>
             ))}
             <ThemeToggle />
-            <UserMenu />
           </div>
           
           <div className="flex md:hidden items-center">
             <ThemeToggle />
-            <UserMenu />
             <button
               type="button"
               className="inline-flex items-center justify-center p-2 ml-3 rounded-md text-foreground hover:text-cloud-blue focus:outline-none"
