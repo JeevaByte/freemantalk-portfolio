@@ -17,6 +17,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import Navbar from "@/components/Navbar";
 
 // Lazy load components
 const IndexLazy = lazy(() => import("@/pages/Index"));
@@ -49,6 +50,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <Navbar />
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<IndexLazy />} />

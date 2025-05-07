@@ -36,7 +36,7 @@ const About = memo(({ className = "" }: AboutPageProps) => {
           <div className="mb-10">
             <h1 className="text-4xl font-bold mb-4">About Me</h1>
             <p className="text-lg text-muted-foreground max-w-3xl mb-4">
-              As a Cloud Engineer with over seven years of hands-on experience, I design and automate AWS infrastructures using Terraform and CloudFormation, deploy resilient containerized applications with Docker and Kubernetes, and implement multi-cloud strategies. I’m AWS Certified (Solutions Architect – Associate, Developer – Associate) and HashiCorp Certified: Terraform Associate. My passion lies in building scalable, secure, and cost-effective cloud solutions that drive real-world impact.
+              I’m a certified Cloud Engineer with over 7 years of experience architecting, automating, and optimizing AWS infrastructures. I specialize in Infrastructure as Code (Terraform, CloudFormation), container orchestration (Docker, Kubernetes), and cost-efficient multi-cloud strategies. Holding AWS Solutions Architect and Developer Associate certifications, I’m passionate about building scalable, resilient, and secure cloud systems that deliver real-world impact.
             </p>
             <BlogPlatformIcons className="mb-8" />
           </div>
@@ -99,45 +99,53 @@ const About = memo(({ className = "" }: AboutPageProps) => {
             </aside>
 
             <div className="md:col-span-3">
-              <h2 className="text-2xl font-semibold mb-4">Professional Experience</h2>
-              <ul className="space-y-8 text-muted-foreground">
+              <h2 className="text-3xl font-bold mb-6 text-primary">Professional Experience</h2>
+              <ul className="space-y-10">
                 <li>
-                  <h3 className="text-xl font-medium">AWS Infrastructure Engineer</h3>
-                  <p className="italic text-sm mb-2">Perficient Inc, Chennai, India | Feb 2022 – Aug 2024</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>Designed and implemented scalable AWS infrastructure, improving reliability by 20%.</li>
-                    <li>Automated provisioning with Terraform and CloudFormation, cutting deployment times by 50%.</li>
-                    <li>Integrated monitoring with Prometheus and Grafana, reducing downtime by 15%.</li>
-                    <li>Led migration of legacy on-premises workloads to AWS, achieving 30% cost savings with zero data loss.</li>
+                  <h3 className="text-xl font-semibold text-foreground">AWS Infrastructure Engineer</h3>
+                  <p className="text-sm text-muted-foreground italic mb-2">
+                    <span className="text-primary font-medium">Perficient Inc</span>, Chennai, India | Feb 2022 – Aug 2024
+                  </p>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground leading-relaxed">
+                    <li>Architected and deployed scalable AWS solutions, improving platform reliability by 20%.</li>
+                    <li>Automated infrastructure using Terraform and CloudFormation, reducing deployment time by 50%.</li>
+                    <li>Integrated monitoring with Prometheus and Grafana, decreasing downtime by 15%.</li>
+                    <li>Migrated legacy on-prem workloads to AWS, achieving 30% cost savings and zero data loss.</li>
                   </ul>
                 </li>
 
                 <li>
-                  <h3 className="text-xl font-medium">AWS Operational Engineer</h3>
-                  <p className="italic text-sm mb-2">Tata Consultancy Services, Chennai, India | Mar 2021 – Feb 2022</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>Ensured high availability and security compliance for enterprise AWS applications.</li>
-                    <li>Optimized resource usage, reducing cloud expenditure by 25%.</li>
-                    <li>Resolved critical infrastructure issues, ensuring uninterrupted operations.</li>
+                  <h3 className="text-xl font-semibold text-foreground">AWS Operational Engineer</h3>
+                  <p className="text-sm text-muted-foreground italic mb-2">
+                    <span className="text-primary font-medium">Tata Consultancy Services</span>, Chennai, India | Mar 2021 – Feb 2022
+                  </p>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground leading-relaxed">
+                    <li>Maintained high availability and security compliance for mission-critical AWS environments.</li>
+                    <li>Reduced operational costs by 25% through effective resource optimization.</li>
+                    <li>Resolved infrastructure incidents and ensured zero downtime for production systems.</li>
                   </ul>
                 </li>
 
                 <li>
-                  <h3 className="text-xl font-medium">Big Data Engineer</h3>
-                  <p className="italic text-sm mb-2">Wipro Limited, Chennai, India | Nov 2018 – Jan 2021</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>Built real-time data pipelines with PySpark and AWS Glue, reducing processing times by 40%.</li>
-                    <li>Ensured data security and compliance with GDPR standards.</li>
+                  <h3 className="text-xl font-semibold text-foreground">Big Data Engineer</h3>
+                  <p className="text-sm text-muted-foreground italic mb-2">
+                    <span className="text-primary font-medium">Wipro Limited</span>, Chennai, India | Nov 2018 – Jan 2021
+                  </p>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground leading-relaxed">
+                    <li>Engineered real-time data pipelines using PySpark and AWS Glue, cutting processing time by 40%.</li>
+                    <li>Ensured compliance with GDPR through secure data handling practices.</li>
                   </ul>
                 </li>
 
                 <li>
-                  <h3 className="text-xl font-medium">System Engineer</h3>
-                  <p className="italic text-sm mb-2">Cognizant Technology Solutions, Chennai, India | Apr 2017 – Oct 2018</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>Managed day-to-day operations and maintenance of on-premises and cloud infrastructure, ensuring 99.9% uptime.</li>
-                    <li>Developed automation scripts using Bash and PowerShell to streamline deployments, reducing manual effort by 30%.</li>
-                    <li>Collaborated with cross-functional teams to troubleshoot incidents and implement preventative solutions, improving MTTR by 25%.</li>
+                  <h3 className="text-xl font-semibold text-foreground">System Engineer</h3>
+                  <p className="text-sm text-muted-foreground italic mb-2">
+                    <span className="text-primary font-medium">Cognizant Technology Solutions</span>, Chennai, India | Apr 2017 – Oct 2018
+                  </p>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground leading-relaxed">
+                    <li>Managed cloud and on-prem infrastructure with 99.9% uptime across services.</li>
+                    <li>Developed deployment automation scripts with Bash and PowerShell, reducing manual effort by 30%.</li>
+                    <li>Improved incident resolution by 25% through proactive issue identification and RCA practices.</li>
                   </ul>
                 </li>
               </ul>
