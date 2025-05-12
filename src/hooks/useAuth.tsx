@@ -9,7 +9,7 @@ type IsAdminParams = {
 };
 
 type IsAdminResponse = boolean;
-export const useAuth = () => {
+const useAuth = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
@@ -68,3 +68,5 @@ export const useAuth = () => {
 
   return { user, login, logout };
 };
+
+export default useAuth;

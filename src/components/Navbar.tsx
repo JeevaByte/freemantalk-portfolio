@@ -34,18 +34,13 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0 font-bold text-xl">
             <Link to="/" className="flex items-center space-x-2">
-<<<<<<< HEAD
               <img 
-                src="/images/Logo.png" // If placed in the `public/images` folder
+                src="/images/Logo.png" 
                 alt="Logo" 
-                className="h-16 w-16 object-contain" // Increased size from h-12 w-12 to h-16 w-16
+                className="h-24 w-24 object-contain" 
                 loading="lazy" 
               />
               <span className="text-new-cloud-blue dark:text-new-cloud-blue">FreemanTalk</span>
-=======
-              <span className="text-cloud-blue">Freeman</span>
-              <span>Talk</span>
->>>>>>> ab3c9709187ecba85cae65bea9af94832ff956be
             </Link>
           </div>
           

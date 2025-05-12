@@ -5,7 +5,9 @@ import BlogPlatformIcons from "@/components/blog/BlogPlatformIcons";
 import { Download, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AboutPageProps } from "@/types/about";
-import { memo } from "react";
+import { memo, lazy } from "react";
+
+const AboutLazy = lazy(() => import("@/pages/About"));
 
 const socialLinks = [
   {

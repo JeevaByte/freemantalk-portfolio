@@ -1,4 +1,4 @@
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth"; // Use named import if useAuth is exported as a named export
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
