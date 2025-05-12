@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
-import UserMenu from "./auth/UserMenu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +17,6 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Projects", path: "/projects" },
     { name: "Blog", path: "/blog" },
@@ -29,15 +27,20 @@ const Navbar = () => {
   return (
     <nav 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+        scrolled ? "bg-new-background/90 backdrop-blur-md shadow-sm" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0 font-bold text-xl">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-cloud-blue">Cloud</span>
-              <span>Engineer</span>
+              <img 
+                src="/images/Logo.png" // If placed in the `public/images` folder
+                alt="Logo" 
+                className="h-16 w-16 object-contain" // Increased size from h-12 w-12 to h-16 w-16
+                loading="lazy" 
+              />
+              <span className="text-new-cloud-blue dark:text-new-cloud-blue">FreemanTalk</span>
             </Link>
           </div>
           
@@ -46,21 +49,19 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className="text-foreground hover:text-cloud-blue px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                className="text-new-foreground dark:text-new-foreground hover:text-new-cloud-blue dark:hover:text-new-cloud-blue px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 {link.name}
               </Link>
             ))}
             <ThemeToggle />
-            <UserMenu />
           </div>
           
           <div className="flex md:hidden items-center">
             <ThemeToggle />
-            <UserMenu />
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 ml-3 rounded-md text-foreground hover:text-cloud-blue focus:outline-none"
+              className="inline-flex items-center justify-center p-2 ml-3 rounded-md text-new-foreground dark:text-new-foreground hover:text-new-cloud-blue dark:hover:text-new-cloud-blue focus:outline-none"
               aria-expanded={isOpen}
               onClick={() => setIsOpen(!isOpen)}
             >
@@ -72,12 +73,12 @@ const Navbar = () => {
       </div>
       
       <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background shadow-lg">
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-new-background dark:bg-new-background shadow-lg">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
-              className="block px-3 py-2 rounded-md text-base font-medium hover:text-cloud-blue"
+              className="block px-3 py-2 rounded-md text-base font-medium text-new-foreground dark:text-new-foreground hover:text-new-cloud-blue dark:hover:text-new-cloud-blue"
               onClick={() => setIsOpen(false)}
             >
               {link.name}

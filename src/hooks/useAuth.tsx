@@ -1,7 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 // Define types for the is_admin RPC function
 type IsAdminParams = {
@@ -9,57 +9,62 @@ type IsAdminParams = {
 };
 
 type IsAdminResponse = boolean;
-
 export const useAuth = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoading(true);
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          const { data } = await supabase.rpc<IsAdminResponse, IsAdminParams>('is_admin', {
-            user_id: session.user.id
-          });
-          setIsAdmin(!!data);
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("/api/auth/user");
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
         } else {
-          setIsAdmin(false);
+          setUser(null);
         }
-        setIsLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch user", error);
+        setUser(null);
       }
-    );
+    };
 
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        supabase.rpc<IsAdminResponse, IsAdminParams>('is_admin', {
-          user_id: session.user.id
-        }).then(({ data }) => {
-          setIsAdmin(!!data);
-          setIsLoading(false);
-        });
-      } else {
-        setIsLoading(false);
-      }
-    });
-
-    return () => subscription.unsubscribe();
+    fetchUser();
   }, []);
 
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) console.error('Error signing out:', error.message);
+  const login = async (credentials) => {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        const userData = await response.json();
+        setUser(userData);
+        navigate("/");
+      } else {
+        throw new Error("Login failed");
+      }
+    } catch (error) {
+      console.error("Login error", error);
+    }
   };
 
-  return { user, session, isAdmin, isLoading, signOut };
+  const logout = async () => {
+    try {
+      const response = await fetch("/api/auth/logout", { method: "POST" });
+      if (response.ok) {
+        setUser(null);
+        navigate("/login");
+      } else {
+        throw new Error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error", error);
+    }
+  };
+
+  return { user, login, logout };
 };

@@ -7,9 +7,12 @@ const Hero = () => {
     <section className="min-h-screen flex flex-col justify-center items-center pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
         <div className="text-center md:text-left space-y-6 animate-fade-in">
-          <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight">
+          <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight text-cloud-blue">
             Cloud Architect <span className="text-cloud-blue">& Data Specialist</span>
           </h1>
+          <p className="text-lg text-muted-foreground max-w-xl">
+            FreemanTalk is your trusted partner in cloud architecture and data solutions. We specialize in empowering businesses with innovative, scalable, and secure cloud technologies to drive growth and operational excellence.
+          </p>
           <p className="text-lg text-muted-foreground max-w-xl">
             Welcome to my portfolio! I am Jeevanantham Balakrishnan, a highly experienced Cloud Architect and Data Engineer with over 6 years of hands-on expertise in designing, developing, and optimizing scalable, secure, and high-performance cloud solutions. My focus lies in empowering businesses to unlock the full potential of cloud technologies, driving both innovation and operational excellence. Through strategic cloud architecture and automation, I help organizations improve their agility, reduce costs, and accelerate growth in an increasingly digital world.
           </p>

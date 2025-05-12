@@ -4,8 +4,8 @@ import Footer from "@/components/Footer";
 import ContactForm from "@/components/contact/ContactForm";
 import { Calendar, Github, Linkedin, Mail, MapPin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SocialMediaIntegration from "@/components/social/SocialMediaIntegration";
-import { useAuth } from "@/hooks/useAuth";
+import SocialMediaIntegration from "@/components/social/SocialMediaIntegration"; 
+import useAuth from "@/hooks/useAuth";
 import BlogPlatformIcons from "@/components/blog/BlogPlatformIcons";
 
 const Contact = () => {
