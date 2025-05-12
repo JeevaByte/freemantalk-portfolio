@@ -34,6 +34,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0 font-bold text-xl">
             <Link to="/" className="flex items-center space-x-2">
+<<<<<<< HEAD
               <img 
                 src="/images/Logo.png" // If placed in the `public/images` folder
                 alt="Logo" 
@@ -41,6 +42,10 @@ const Navbar = () => {
                 loading="lazy" 
               />
               <span className="text-new-cloud-blue dark:text-new-cloud-blue">FreemanTalk</span>
+=======
+              <span className="text-cloud-blue">Freeman</span>
+              <span>Talk</span>
+>>>>>>> ab3c9709187ecba85cae65bea9af94832ff956be
             </Link>
           </div>
           
